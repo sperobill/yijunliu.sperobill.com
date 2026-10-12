@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Yijun Liu — IT Technical Lead</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+  :root{--green:#00ff88;--green-dim:#00cc6a;--green-dark:#003d1f;--bg:#0a0e0f;--bg2:#0f1517;--bg3:#141c1e;--border:#1e2d30;--text:#c8d8d0;--muted:#4a6860;--accent:#00d4ff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.7;overflow-x:hidden}
+  ::selection{background:var(--green);color:#000}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:4px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border)}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,15,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px}
+  .nav-logo{color:var(--green);font-size:13px;font-weight:700;letter-spacing:1px}
+  .nav-links{display:flex;gap:1.5rem}
+  .nav-links a{font-size:12px;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--green);text-decoration:none}
+  .nav-status{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 3rem 4rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(0,255,136,0.04) 0%,transparent 60%);pointer-events:none}
+  .terminal-window{background:var(--bg2);border:1px solid var(--border);border-radius:10px;max-width:720px;overflow:hidden;box-shadow:0 0 60px rgba(0,255,136,0.05)}
+  .terminal-bar{background:var(--bg3);padding:10px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+  .t-dot{width:12px;height:12px;border-radius:50%}
+  .t-dot.r{background:#ff5f57}.t-dot.y{background:#ffbd2e}.t-dot.g{background:#28c840}
+  .t-title{flex:1;text-align:center;font-size:11px;color:var(--muted)}
+  .terminal-body{padding:1.5rem;min-height:280px}
+  .t-line{display:block;margin-bottom:4px;opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+  .t-line.show{opacity:1;transform:none}
+  .prompt{color:var(--green)}
+  .cmd{color:#fff}
+  .out{color:var(--text)}
+  .out.dim{color:var(--muted)}
+  .out.accent{color:var(--accent)}
+  .out.highlight{color:var(--green)}
+  .cursor{display:inline-block;width:8px;height:14px;background:var(--green);animation:blink .8s step-end infinite;vertical-align:middle;margin-left:2px}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+  .hero-cta{margin-top:2rem;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border:1px solid var(--green);color:var(--green);font-family:'JetBrains Mono',monospace;font-size:12px;border-radius:4px;cursor:pointer;background:transparent;transition:all .2s}
+  .btn:hover{background:var(--green);color:#000;text-decoration:none}
+  .btn.ghost{border-color:var(--border);color:var(--muted)}
+  .btn.ghost:hover{border-color:var(--muted);color:var(--text);background:transparent}
+
+  /* SECTIONS */
+  .section{padding:5rem 3rem;max-width:900px;margin:0 auto}
+  .sec-header{display:flex;align-items:center;gap:12px;margin-bottom:2.5rem}
+  .sec-num{font-size:11px;color:var(--green);font-weight:700}
+  .sec-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+  .sec-line{flex:1;height:1px;background:var(--border)}
+
+  /* TIMELINE */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--green),var(--border))}
+  .tl-item{position:relative;margin-bottom:2.5rem;opacity:0;transform:translateX(-20px);transition:opacity .5s,transform .5s}
+  .tl-item.visible{opacity:1;transform:none}
+  .tl-dot{position:absolute;left:-2.45rem;top:6px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+  .tl-date{font-size:11px;color:var(--green);margin-bottom:4px;letter-spacing:.5px}
+  .tl-role{font-size:16px;font-weight:700;color:#fff;margin-bottom:2px}
+  .tl-company{font-size:12px;color:var(--muted);margin-bottom:12px}
+  .tl-bullets{list-style:none;padding:0}
+  .tl-bullets li{font-size:12px;color:var(--text);padding:3px 0 3px 16px;position:relative;line-height:1.6}
+  .tl-bullets li::before{content:'›';position:absolute;left:0;color:var(--green)}
+
+  /* SKILLS */
+  .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  @media(max-width:600px){.skills-grid{grid-template-columns:1fr}}
+  .skill-item{opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+  .skill-item.visible{opacity:1;transform:none}
+  .skill-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px}
+  .skill-name{color:var(--text)}
+  .skill-pct{color:var(--green)}
+  .skill-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+  .skill-fill{height:100%;background:linear-gradient(to right,var(--green),var(--accent));border-radius:2px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1)}
+
+  /* CARDS */
+  .cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.25rem;opacity:0;transform:translateY(16px);transition:opacity .4s,transform .4s,border-color .2s}
+  .card.visible{opacity:1;transform:none}
+  .card:hover{border-color:var(--green)}
+  .card-icon{font-size:20px;margin-bottom:.75rem}
+  .card-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px}
+  .card-sub{font-size:11px;color:var(--muted)}
+
+  /* AWARDS */
+  .award-list{display:flex;flex-direction:column;gap:.75rem}
+  .award-item{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:.9rem 1.1rem;opacity:0;transform:translateX(-16px);transition:opacity .4s,transform .4s}
+  .award-item.visible{opacity:1;transform:none}
+  .award-star{color:var(--green);font-size:16px}
+  .award-text{font-size:12px;color:var(--text)}
+
+  /* CONTACT */
+  .contact-box{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between}
+  .contact-info{display:flex;flex-direction:column;gap:8px}
+  .contact-row{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .contact-row span{color:var(--text)}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:.5rem}
+  .tag{font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+
+  /* FOOTER */
+  footer{text-align:center;padding:2rem;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
+
+  /* SCANLINE EFFECT */
+  body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:9999}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">~/yijun-liu</div>
+  <div class="nav-links">
+    <a href="#about">about</a>
+    <a href="#experience">experience</a>
+    <a href="#skills">skills</a>
+    <a href="#education">education</a>
+    <a href="#contact">contact</a>
+  </div>
+  <div class="nav-status"><div class="status-dot"></div>open to opportunities</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="about">
+  <div class="terminal-window">
+    <div class="terminal-bar">
+      <div class="t-dot r"></div><div class="t-dot y"></div><div class="t-dot g"></div>
+      <div class="t-title">bash — yijun@portfolio ~ 80x24</div>
+    </div>
+    <div class="terminal-body" id="term-body">
+      <span class="t-line"><span class="prompt">➜ ~ </span><span class="cmd">whoami</span></span>
+      <span class="t-line"><span class="out highlight">Yijun Liu</span></span>
+      <span class="t-line">&nbsp;</span>
+      <span class="t-line"><span class="prompt">➜ ~ </span><span class="cmd">cat profile.txt</span></span>
+      <span class="t-line"><span class="out">Role      <span style="color:#fff">IT Technical Lead</span></span></span>
+      <span class="t-line"><span class="out">Company   <span style="color:#fff">NetBrain Technologies (Blackstone)</span></span></span>
+      <span class="t-line"><span class="out">Location  <span style="color:#fff">Hicksville, NY</span></span></span>
+      <span class="t-line"><span class="out">Exp       <span style="color:#fff">6+ years</span></span></span>
+      <span class="t-line">&nbsp;</span>
+      <span class="t-line"><span class="prompt">➜ ~ </span><span class="cmd">cat summary.txt</span></span>
+      <span class="t-line"><span class="out dim">IT pro specializing in endpoint mgmt, SaaS admin,</span></span>
+      <span class="t-line"><span class="out dim">identity & access mgmt, and IT operations automation.</span></span>
+      <span class="t-line"><span class="out dim">Built AI-powered ticket assistant → saved 20+ hrs/week.</span></span>
+      <span class="t-line">&nbsp;</span>
+      <span class="t-line"><span class="prompt">➜ ~ </span><span class="cursor"></span></span>
+    </div>
+  </div>
+  <div class="hero-cta">
+    <a class="btn" href="#contact">./contact.sh</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/yijunliu97/" target="_blank">→ LinkedIn</a>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="sec-header">
+    <span class="sec-num">01</span>
+    <span class="sec-title">experience</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">AUG 2019 – PRESENT</div>
+      <div class="tl-role">IT Technical Lead</div>
+      <div class="tl-company">NetBrain Technologies (Blackstone Portfolio Company) · Burlington, MA</div>
+      <ul class="tl-bullets">
+        <li>End-to-end IT support for 450+ global employees across North America, EMEA, and APAC.</li>
+        <li>Managed macOS & Windows via Apple Business Manager and Microsoft Intune — enrollment, compliance, app deployment, patching.</li>
+        <li>Implemented zero-touch deployment workflows, improving onboarding speed and reducing human errors.</li>
+        <li>Configured SSO (Azure AD / Entra ID) across Atlassian, Zendesk, Zoom, Dropbox; enforced MFA & Conditional Access.</li>
+        <li>Built automated onboarding/offboarding with PowerShell, Python, APIs, and n8n — saving 20+ hours/week.</li>
+        <li>Developed AI-powered IT support assistant integrating Zendesk APIs and OpenAI for faster resolution.</li>
+        <li>Negotiated vendor contracts resulting in $60K+ annual savings.</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-date">AUG 2017 – FEB 2020</div>
+      <div class="tl-role">Customer Service Team Lead</div>
+      <div class="tl-company">River Hawk Shop, UMass Lowell · Lowell, MA</div>
+      <ul class="tl-bullets">
+        <li>Supervised front-line support team, resolved escalated issues, ensured service quality.</li>
+        <li>Trained and mentored junior staff, improving team readiness and efficiency.</li>
+        <li>Coordinated between management and technical teams to address operational gaps.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section" id="skills">
+  <div class="sec-header">
+    <span class="sec-num">02</span>
+    <span class="sec-title">skills</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">Microsoft Intune / ABM</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" data-w="95"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">SSO / IAM / RBAC</span><span class="skill-pct">92%</span></div><div class="skill-track"><div class="skill-fill" data-w="92"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">Microsoft 365 / Google Workspace</span><span class="skill-pct">93%</span></div><div class="skill-track"><div class="skill-fill" data-w="93"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">PowerShell / Python</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" data-w="85"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">n8n Workflow Automation</span><span class="skill-pct">88%</span></div><div class="skill-track"><div class="skill-fill" data-w="88"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">API Integrations / OpenAI</span><span class="skill-pct">82%</span></div><div class="skill-track"><div class="skill-fill" data-w="82"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">Atlassian (Jira & Confluence)</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" data-w="90"></div></div></div>
+    <div class="skill-item"><div class="skill-label"><span class="skill-name">Zendesk ITSM</span><span class="skill-pct">91%</span></div><div class="skill-track"><div class="skill-fill" data-w="91"></div></div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section" id="education">
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <span class="sec-title">education & certs</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="cards-row">
+    <div class="card"><div class="card-icon">🎓</div><div class="card-title">M.S. Computer Information Systems</div><div class="card-sub">Boston University · 2022</div></div>
+    <div class="card"><div class="card-icon">🎓</div><div class="card-title">B.S. Information Technology</div><div class="card-sub">UMass Lowell · 2020</div></div>
+    <div class="card"><div class="card-icon">🏅</div><div class="card-title">Microsoft 365 Certified</div><div class="card-sub">Endpoint Administrator Associate</div></div>
+    <div class="card"><div class="card-icon">🌐</div><div class="card-title">Bilingual</div><div class="card-sub">English & Chinese (fluent)</div></div>
+  </div>
+  <div style="margin-top:2rem">
+    <div class="sec-header" style="margin-bottom:1.25rem">
+      <span class="sec-num" style="font-size:10px">★</span>
+      <span class="sec-title" style="font-size:16px">awards</span>
+      <div class="sec-line"></div>
+    </div>
+    <div class="award-list">
+      <div class="award-item"><span class="award-star">★</span><span class="award-text">Customer Centricity Award — Outstanding IT support</span></div>
+      <div class="award-item"><span class="award-star">★</span><span class="award-text">Collaboration Award — Cross-team global IT projects</span></div>
+      <div class="award-item"><span class="award-star">★</span><span class="award-text">Unsung Hero Award — Driving automation & improvements</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="sec-header">
+    <span class="sec-num">04</span>
+    <span class="sec-title">contact</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="contact-box">
+    <div class="contact-info">
+      <div class="contact-row"><span style="color:var(--green)">$</span> email <span><a href="mailto:bill.liu@sperobill.com">bill.liu@sperobill.com</a></span></div>
+      <div class="contact-row"><span style="color:var(--green)">$</span> location <span>Hicksville, NY</span></div>
+      <div class="contact-row"><span style="color:var(--green)">$</span> linkedin <span><a href="https://www.linkedin.com/in/yijunliu97/" target="_blank">linkedin.com/in/yijunliu97</a></span></div>
+    </div>
+    <div>
+      <div class="tag-row">
+        <span class="tag">open to work</span>
+        <span class="tag">IT leadership</span>
+        <span class="tag">automation</span>
+        <span class="tag">SaaS admin</span>
+      </div>
+      <div style="margin-top:1rem"><a class="btn" href="mailto:bill.liu@sperobill.com">→ send message</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span style="color:var(--green)">~/yijun-liu</span> · built with passion · © 2026
+</footer>
+
+<script>
+// Terminal animation
+const lines = document.querySelectorAll('.t-line');
+lines.forEach((l,i)=>setTimeout(()=>l.classList.add('show'),i*120));
+
+// Intersection observer for scroll animations
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      // Trigger skill bars
+      const fill = e.target.querySelector('.skill-fill');
+      if(fill) setTimeout(()=>fill.style.width=fill.dataset.w+'%',100);
+    }
+  });
+},{threshold:0.15});
+
+document.querySelectorAll('.tl-item,.skill-item,.card,.award-item').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
