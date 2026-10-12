@@ -101,6 +101,18 @@
   .award-star{color:var(--green);font-size:16px}
   .award-text{font-size:12px;color:var(--text)}
 
+  /* PROJECTS */
+  .proj-list{display:flex;flex-direction:column;gap:1rem}
+  .proj-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1.5rem;opacity:0;transform:translateY(16px);transition:opacity .4s,transform .4s,border-color .2s}
+  .proj-item.visible{opacity:1;transform:none}
+  .proj-item:hover{border-color:var(--green)}
+  .proj-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.6rem;flex-wrap:wrap}
+  .proj-title{font-size:15px;font-weight:700;color:#fff}
+  .proj-title::before{content:'▸ ';color:var(--green)}
+  .proj-link{font-size:12px;color:var(--accent);white-space:nowrap}
+  .proj-desc{font-size:12px;color:var(--text);line-height:1.7;margin-bottom:.9rem}
+  .proj-desc .hl{color:var(--green)}
+
   /* CONTACT */
   .contact-box{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:2rem;display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between}
   .contact-info{display:flex;flex-direction:column;gap:8px}
@@ -124,6 +136,7 @@
     <a href="#about">about</a>
     <a href="#experience">experience</a>
     <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
     <a href="#education">education</a>
     <a href="#contact">contact</a>
   </div>
@@ -217,10 +230,34 @@
   </div>
 </section>
 
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="sec-header">
+    <span class="sec-num">03</span>
+    <span class="sec-title">projects</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="proj-list">
+    <div class="proj-item">
+      <div class="proj-head">
+        <span class="proj-title">AI-Powered IT Support Assistant</span>
+        <a class="proj-link" href="https://github.com/sperobill/ai-support-assistant" target="_blank">→ full case study</a>
+      </div>
+      <div class="proj-desc">An n8n workflow that reads every new Zendesk ticket, retrieves similar historical resolutions, and drafts an action plan as an internal note — <span class="hl">first response from hours to as fast as 10 minutes</span>, at a few dollars a month. Human-in-the-loop by design: AI never talks to users directly.</div>
+      <div class="tag-row">
+        <span class="tag">n8n</span>
+        <span class="tag">Zendesk API</span>
+        <span class="tag">LLM</span>
+        <span class="tag">RAG</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- EDUCATION -->
 <section class="section" id="education">
   <div class="sec-header">
-    <span class="sec-num">03</span>
+    <span class="sec-num">04</span>
     <span class="sec-title">education & certs</span>
     <div class="sec-line"></div>
   </div>
@@ -247,7 +284,7 @@
 <!-- CONTACT -->
 <section class="section" id="contact">
   <div class="sec-header">
-    <span class="sec-num">04</span>
+    <span class="sec-num">05</span>
     <span class="sec-title">contact</span>
     <div class="sec-line"></div>
   </div>
@@ -290,7 +327,7 @@ const obs = new IntersectionObserver((entries)=>{
   });
 },{threshold:0.15});
 
-document.querySelectorAll('.tl-item,.skill-item,.card,.award-item').forEach(el=>obs.observe(el));
+document.querySelectorAll('.tl-item,.skill-item,.card,.award-item,.proj-item').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
